@@ -1,6 +1,5 @@
 import cv2 as cv
 import time
-import numpy as np
 
 from tracker import *
 
@@ -23,14 +22,17 @@ while True:
     frame = cv.resize(frame, (900, 700), interpolation=cv.INTER_NEAREST)
 
     if isTrue:
+        #Converting the video to gray scale
         grayScale = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         grayScaleResized = cv.resize(grayScale, (400, 293), interpolation=cv.INTER_NEAREST)
 
+        #Calculate and display live average speed 
         try:
             cv.putText(frame, f"Average speed: {int(sum(speed_rec)/len(speed_rec))}", (10, 100), cv.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255), thickness=1)
         except ZeroDivisionError:
             pass
 
+        #Drawing the points that I talked in README.md
         cv.line(frame, (85, 150), (787, 150), (255, 0, 0), thickness=2)
         cv.line(frame, (75, 350), (777, 350), (0, 0, 255), thickness=2)
 
@@ -44,7 +46,9 @@ while True:
 
                 rectangled_img = cv.rectangle(frame, (x, y), (x+w, y+h), (0, 190, 200), thickness=2)
 
+                #Checking the car to cross pt1
                 if (y+h) >= 160:
+                    #Initial time
                     time_i = time.time()
                     rectangled_img = cv.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), thickness=2)
 
@@ -53,13 +57,16 @@ while True:
                     for i in boxes_ids:
                         x, y, w, h, id = i
 
+                #Checking the car to cross pt2
                 if (y+h) >= 360:
+                    #Final time
                     time_f = time.time()
                     check_append(id)
 
                     rectangled_img = cv.rectangle(frame, (x, y), (x+w, y+h), (0, 190, 200), thickness=2)
 
                     try:
+                        #Calculate the speed and convert it to KMPH
                         speed = int((dist/(time_f-time_i))*3.6)
                         speed_rec.append(speed)
 
@@ -75,7 +82,6 @@ while True:
         cv.imshow("Video that is being processed", grayScaleResized)
 
         if cv.waitKey(1) & 0XFF==ord('d'):
-            print(int(sum(speed_rec)/len(speed_rec)))
             break
     else:
         break
