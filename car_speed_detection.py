@@ -4,7 +4,7 @@ import numpy as np
 
 from tracker import *
 
-car_detection_data = cv.CascadeClassifier("datasets/car_detection_data.xml")
+car_detection_data = cv.CascadeClassifier("car_detection_data.xml")
 object_detector = cv.createBackgroundSubtractorMOG2()
 #Li165C-DN, cars-video_dBoddfSp_y1Sd
 video = cv.VideoCapture("example_video_cars.mp4")
