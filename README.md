@@ -18,5 +18,6 @@ Make 2 points on the road. Let's say `pt1` and `pt2`, when a car crosses pt1, th
 The difference of *time_i* and *time_f* will give time taken.<br>
 
 To calculate the avarage speed the speeds detected are taken and stored in a `list` and formula `average = sum of all items/total number of items` has been used.<br>
+To calculate the distance you can also divide 2 point values of y axis `y(pt1)/(y(pt2)` or vice versa
 
 Note that the first few cars speeds in my video are not accurate as the cars are already in between *pt1* and *pt2*. The cars that come after the few first cars have been detected of accurate speed.
